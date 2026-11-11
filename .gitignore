@@ -4,3 +4,4 @@ __pycache__/
 *.py[cod]
 .env
 .env.*
+kolko_i_krzyzyk/db.sqlite3

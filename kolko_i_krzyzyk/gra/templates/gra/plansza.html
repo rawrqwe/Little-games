@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Kółko i krzyżyk</title>
+    <style>
+        .plansza {
+            display: grid;
+            grid-template-columns: repeat(3, 80px);
+            gap: 5px;
+        }
+
+        .plansza button {
+            height: 80px;
+            font-size: 32px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Kółko i krzyżyk </h1>
+    {% if zwyciesca %}
+    <p>Wygrał gracz {{zwyciesca}}</p>
+    {%else%}
+    <p>Teraz gra: {{gracz}}</p>
+    {%endif%}
+    <form method="post">
+        {% csrf_token%}
+        <div class="plansza">
+            {% for pole in plansza %}
+            <button type="submit" name="pole" value="{{forloop.counter0}}">
+                {{pole}}
+            </button>
+            {% endfor %}
+        </div>
+        <button type="submit" name="reset" value="1">
+            Nowa gra
+        </button>
+
+
+    </form>
+</body>
+
+</html>
