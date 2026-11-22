@@ -81,7 +81,7 @@ def wybierz_poziom_trudnosci():
         print("Wpisałeś nie poprawna wartość!")
 
     while True:
-        wybor_limitu = input("Podaj limit błędów(1-99): ").strip()
+        wybor_limitu = input("Podaj limit ruchów(1-99): ").strip()
         try:
             limit_ruchow = int(wybor_limitu)
         except ValueError:
@@ -96,11 +96,7 @@ def wybierz_poziom_trudnosci():
     return rozmiar_planszy, limit_ruchow
 
 
-if __name__ == "__main__":
-    ustawienia = wybierz_poziom_trudnosci()
-    rozmiar_planszy = ustawienia[0]
-    limit_ruchow = ustawienia[1]
-
+def rozegraj_runde(rozmiar_planszy, limit_ruchow):
     plansza = utworz_plansze(rozmiar_planszy)
 
     pozycja_gracza = (0, 0)
@@ -126,11 +122,11 @@ if __name__ == "__main__":
 
         if pozycja_gracza == pozycja_skarbu:
             print("Wygrałeś!")
-            break
+            return
 
         if licznik_ruchow >= limit_ruchow:
             print("Przegrałeś! Skończyły się ruchy.")
-            break
+            return
 
         odleglosc_przed = oblicz_odleglosc(stara_pozycja, pozycja_skarbu)
         odleglosc_po = oblicz_odleglosc(pozycja_gracza, pozycja_skarbu)
@@ -139,3 +135,30 @@ if __name__ == "__main__":
             print("Cieplej!")
         else:
             print("Zimniej!")
+
+
+def zapytaj_tak_nie(pytanie):
+    while True:
+        odpowiedz = input(pytanie).strip().lower()
+        if odpowiedz in ("t", "n"):
+            return odpowiedz
+        print("Wpisz t lub n.")
+
+
+if __name__ == "__main__":
+    ustawienia = wybierz_poziom_trudnosci()
+    rozmiar_planszy = ustawienia[0]
+    limit_ruchow = ustawienia[1]
+
+    while True:
+
+        rozegraj_runde(rozmiar_planszy, limit_ruchow)
+
+        if zapytaj_tak_nie("Zagraj ponownie (t/n)? ") == "n":
+            print("Do zobaczenia :)")
+            break
+
+        if zapytaj_tak_nie("Zostawić obecne ustawienia (t/n)? ") == "n":
+            rozmiar_planszy, limit_ruchow = wybierz_poziom_trudnosci()
+
+        print("To zaczynam nową rozgrywkę.")
